@@ -34,5 +34,14 @@ namespace WpfDIDemo
             //注册视图
             services.AddSingleton<MainWindow>();
         }
+
+        //退出释放
+        protected override void OnExit(ExitEventArgs e)
+        {
+            if (_serviceProvider is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
+        }
     }
 }
