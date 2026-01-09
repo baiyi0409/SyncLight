@@ -31,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autoupdater.NET.Official" Version="1.9.2" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.1" />
@@ -42,8 +43,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Pages\" />
     <Folder Include="Common\" />
+    <Folder Include="Views\Pages\" />
   </ItemGroup>
 
 </Project>

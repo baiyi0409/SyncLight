@@ -9,6 +9,10 @@ using System.ComponentModel;
 using WpfDIDemo.Services.ConfigurationLoader;
 using WpfDIDemo.Options;
 using Microsoft.Extensions.Options;
+using WpfDIDemo.Views;
+using System.Net.Security;
+using WpfDIDemo.ViewModels.AutoUpdate;
+using WpfDIDemo.Services.AutoUpdateService;
 
 namespace WpfDIDemo
 {
@@ -38,7 +42,12 @@ namespace WpfDIDemo
 
             //获取主窗口并启动
             var mainWindow = Services.GetRequiredService<MainWindow>();
+            this.MainWindow = mainWindow;
             mainWindow.Show();
+
+            //自动更新
+            var autoUpdater = Services.GetRequiredService<AutoUpdateService>();
+            autoUpdater.Start("http://localhost:4555/AutoUpdate.json");
         }
 
         private void ConfigureServices(IServiceCollection services) 
@@ -50,14 +59,19 @@ namespace WpfDIDemo
                 loader.Configuration.GetSection("Localization")
             );
 
+            //自动更新服务
+            services.AddSingleton<AutoUpdateService>();
+
             //本地化语言服务
             services.AddSingleton<ILocalizationService, LocalizationService>();
 
             //注册视图模型
             services.AddSingleton<IMainViewModel, MainViewModel>();
+            services.AddSingleton<IAutoUpdateViewModel, AutoUpdateViewModel>();
 
             //注册视图
             services.AddSingleton<MainWindow>();
+            services.AddSingleton<AutoUpdateView>();
         }
 
         //退出释放

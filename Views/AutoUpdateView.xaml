@@ -1,0 +1,17 @@
+﻿<Window
+    x:Class="WpfDIDemo.Views.AutoUpdateView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WpfDIDemo.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:WpfDIDemo.ViewModels.AutoUpdate"
+    Title="AutoUpdateView"
+    Width="800"
+    Height="450"
+    d:DataContext="{d:DesignInstance Type=viewmodels:AutoUpdateViewModel}"
+    mc:Ignorable="d">
+    <Grid>
+        <TextBlock Text="Hello" />
+    </Grid>
+</Window>
