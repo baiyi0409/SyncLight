@@ -3,7 +3,7 @@
 2. 中英文切换
 3. 基于`Velopack`的自动更新
 4. Json配置
-5. 基于`CommunityToolkit.Mvvm`的MVVM
+5. 基于`CommunityToolkit.Mvvm`的 MVVM模式
 
 ### 项目效果
 https://github.com/user-attachments/assets/91b19351-5975-4669-af9c-2f93ad2f38e1
