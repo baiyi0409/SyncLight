@@ -11,31 +11,57 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Velopack;
-using WpfDIDemo.Options;
-using WpfDIDemo.Services.LocalizationService;
-using WpfDIDemo.ViewModels.Main;
+using SyncLight.Options;
+using SyncLight.Services.LocalizationService;
+using SyncLight.ViewModels.Main;
+using System.Collections.ObjectModel;
+using System.Windows.Controls.Primitives;
+using SyncLight.Models;
+using Wpf.Ui;
+using SyncLight.Views.Pages;
+using System.Windows.Controls;
+using Microsoft.Extensions.DependencyInjection;
+using System.Windows.Navigation;
 
-namespace WpfDIDemo.ViewModels
+namespace SyncLight.ViewModels
 {
     public partial class MainViewModel : ObservableObject , IMainViewModel
     {
         private readonly ILocalizationService _localizationService;
         private readonly IOptionsMonitor<LocalizationOption> _localizationOption;
+        private readonly INavigationService _navigationService;
 
-        public MainViewModel(ILocalizationService localizationService, IOptionsMonitor<LocalizationOption> localizationOption)
+        public MainViewModel(ILocalizationService localizationService, IOptionsMonitor<LocalizationOption> localizationOption, INavigationService navigationService)
         {
             _localizationService = localizationService;
             _localizationOption = localizationOption;
+            _navigationService = navigationService;
+            InitMenuBars();
         }
 
         [ObservableProperty]
-        private string _message;
+        public ObservableCollection<MenuBar> menuBars;
 
+        [ObservableProperty]
+        private MenuBar selectedItem;
 
         [RelayCommand]
-        public void SayHello()
+        public void InitMenuBars() 
         {
-            Message = "Hello";
+            MenuBars = new ObservableCollection<MenuBar>()
+            {
+                new MenuBar() { Id=1, Icon="AppsListDetail24", DisplayName="首页",ViewName=typeof(HomePage), Tip="" },
+                new MenuBar() { Id=1, Icon="Settings28", DisplayName="设置",ViewName=typeof(SettingsPage), Tip="" }
+            };
+            SelectedItem = MenuBars.First();
+        }
+
+        [RelayCommand]
+        public void Navigate(MenuBar item) 
+        {
+            if (item == null || item.ViewName == null)
+                return;
+            _navigationService.Navigate(item.ViewName);
         }
 
         [RelayCommand]

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfDIDemo.Services.ConfigurationLoader
+namespace SyncLight.Services.ConfigurationLoader
 {
     public interface IConfigurationLoader
     {

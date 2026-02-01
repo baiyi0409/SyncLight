@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfDIDemo.Services.LocalizationService
+namespace SyncLight.Services.LocalizationService
 {
     public interface ILocalizationService
     {

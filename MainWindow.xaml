@@ -1,33 +1,103 @@
-﻿<Window
-    x:Class="WpfDIDemo.MainWindow"
+﻿<ui:FluentWindow
+    x:Class="SyncLight.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ext="clr-namespace:WpfDIDemo.Extensions"
-    xmlns:local="clr-namespace:WpfDIDemo"
+    xmlns:ext="clr-namespace:SyncLight.Extensions"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:SyncLight"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:viewmodels="clr-namespace:WpfDIDemo.ViewModels"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:viewmodels="clr-namespace:SyncLight.ViewModels"
     Title="{ext:Translate MainWindow.Title}"
-    Width="800"
-    Height="450"
+    Width="1280"
+    Height="800"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    Closed="FluentWindow_Closed"
+    ExtendsContentIntoTitleBar="True"
+    Loaded="FluentWindow_Loaded"
+    WindowBackdropType="Mica"
+    WindowCornerPreference="Default"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid>
-        <StackPanel
-            Width="240"
-            VerticalAlignment="Center"
-            Orientation="Vertical">
-            <TextBlock Text="{Binding Message}" />
-            <Button
-                Height="25"
-                Margin="0,10,0,0"
-                Command="{Binding SayHelloCommand}"
-                Content="{ext:Translate Button.SayHello}" />
-            <Button
-                Height="25"
-                Margin="0,10,0,0"
-                Command="{Binding ChangeLanguageCommand}"
-                Content="{ext:Translate Button.ChangeLanguage}" />
-        </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*" />
+            <ColumnDefinition Width="8.5*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  菜单栏  -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <!--  Logo  -->
+            <Border Grid.Row="0" Padding="20,24">
+                <TextBlock FontSize="18" Text="SyncLight" />
+            </Border>
+
+            <!--  MenuBar  -->
+            <Border Grid.Row="1" Padding="10">
+                <ui:ListView
+                    x:Name="MenuBar"
+                    d:ItemsSource="{d:SampleData ItemCount=5}"
+                    ItemsSource="{Binding MenuBars}"
+                    SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding NavigateCommand}" CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListBox}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <ui:ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="16">
+                                <StackPanel Margin="10,0,0,0" Orientation="Horizontal">
+                                    <ui:SymbolIcon FontSize="24" Symbol="{Binding Icon}" />
+                                    <TextBlock
+                                        Margin="12,6,0,6"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding DisplayName}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ui:ListView.ItemTemplate>
+                </ui:ListView>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!--  标题栏  -->
+            <ui:TitleBar
+                x:Name="TitleBar"
+                Grid.Row="0"
+                Height="36" />
+
+            <!--  显示内容  -->
+            <ui:NavigationView
+                x:Name="MyNavigationView"
+                Grid.Row="1"
+                FrameMargin="0"
+                IsBackButtonVisible="Collapsed"
+                IsPaneToggleVisible="False"
+                OpenPaneLength="0"
+                PaneDisplayMode="Top">
+                <ui:NavigationView.ContentOverlay>
+                    <Grid>
+                        <ui:SnackbarPresenter x:Name="SnackbarPresenter" />
+                    </Grid>
+                </ui:NavigationView.ContentOverlay>
+            </ui:NavigationView>
+        </Grid>
+
+        <ui:ContentDialogHost x:Name="RootContentDialogHost" Grid.Column="1" />
     </Grid>
-</Window>
+</ui:FluentWindow>

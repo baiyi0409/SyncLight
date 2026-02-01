@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfDIDemo.ViewModels.AutoUpdate
+namespace SyncLight.Enums
 {
-    public interface IAutoUpdateViewModel
+    public enum EdgeEnum
     {
+        ThreeSides,
+        FourSides
     }
 }

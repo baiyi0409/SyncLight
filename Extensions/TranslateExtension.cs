@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Markup;
 using Microsoft.Extensions.DependencyInjection;
-using WpfDIDemo.Services.LocalizationService;
+using SyncLight.Services.LocalizationService;
 
-namespace WpfDIDemo.Extensions
+namespace SyncLight.Extensions
 {
     public class TranslateExtension : MarkupExtension
     {
@@ -27,7 +27,7 @@ namespace WpfDIDemo.Extensions
                 return $"[Missing: {_key}]";
 
             var source = new TranslationBindingSource(localization, _key);
-            var binding = new Binding(nameof(TranslationBindingSource.Value))
+            var binding = new System.Windows.Data.Binding(nameof(TranslationBindingSource.Value))
             {
                 Source = source,
                 Mode = BindingMode.OneWay  // 或 OneWay，但 OneTime 更高效（因为值不会变，除非语言切换）

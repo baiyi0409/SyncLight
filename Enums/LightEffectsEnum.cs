@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SyncLight.Options
+namespace SyncLight.Enums
 {
-    public class LocalizationOption
+    public enum LightEffectsEnum
     {
-        public string DefaultCulture { get; set; } = "zh-CN";
+        SyncMode,
+        MicMode,
+        ColorMode,
+        EmbeddedMode
     }
 }

@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfDIDemo.Services.LocalizationService
+namespace SyncLight.Services.LocalizationService
 {
     public class LocalizationService : ILocalizationService
     {

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SyncLight.Options
+namespace SyncLight.Enums
 {
-    public class LocalizationOption
+    public enum DirectionEnum
     {
-        public string DefaultCulture { get; set; } = "zh-CN";
+        LeftToRight,
+        RightToLeft
     }
 }
