@@ -81,19 +81,6 @@ namespace SyncLight.ViewModels.Home
 
         #endregion
 
-        private void SendSolidColor(byte r, byte g, byte b)
-        {
-            if (_adalight?.Connected != true) return;
-
-            var colors = new List<System.Drawing.Color>();
-            for (int i = 0; i < 180; i++)
-            {
-                colors.Add(System.Drawing.Color.FromArgb(r, g, b));
-            }
-
-            _adalight.UpdateColors(colors, update: true);
-        }
-
         #region 追光设置
 
         [ObservableProperty]
@@ -219,23 +206,34 @@ namespace SyncLight.ViewModels.Home
         };
 
         [ObservableProperty]
-        private ObservableCollection<Color> _lightEffectColors;
+        private ObservableCollection<System.Windows.Media.Color> _lightEffectColors;
 
         private void InitLightEffectColors() 
         {
-            var converter = new ColorConverter();
-
-            LightEffectColors = new ObservableCollection<Color>()
+            LightEffectColors = new ObservableCollection<System.Windows.Media.Color>()
             {
-                (Color)converter.ConvertFromString("#FF0000"),
-                (Color)converter.ConvertFromString("#FFF700"),
-                (Color)converter.ConvertFromString("#00FF00"),
-                (Color)converter.ConvertFromString("#00d3ff"),
-                (Color)converter.ConvertFromString("#0000ff"),
-                (Color)converter.ConvertFromString("#ce00ff"),
-                (Color)converter.ConvertFromString("#ff5a00"),
-                (Color)converter.ConvertFromString("#ffffff")
+                (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF0000"),
+                (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFF700"),
+                (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#00FF00"),
+                (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#00D3FF"),
+                (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#0000FF"),
+                (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#CE00FF"),
+                (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF5A00"),
+                (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFFFFF")
             };
+        }
+
+        public void UpdateSolidColor(byte r, byte g, byte b)
+        {
+            if (_adalight?.Connected != true) return;
+
+            var colors = new List<System.Drawing.Color>();
+            for (int i = 0; i < 180; i++)
+            {
+                colors.Add(System.Drawing.Color.FromArgb(r, g, b));
+            }
+
+            _adalight.UpdateColors(colors, update: true);
         }
 
         #endregion

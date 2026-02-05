@@ -13,6 +13,7 @@
                 <ui:ControlsDictionary />
 
                 <ResourceDictionary Source="/Controls/LightEffectsListBoxItem/LightEffectsListBoxItem.xaml" />
+                <ResourceDictionary Source="/Controls/LightEffectColorsListBoxItem/LightEffectColorsListBoxItem.xaml" />
                 <ResourceDictionary Source="/Controls/SyncSnackbar/SyncSnackbar.xaml" />
                 <ResourceDictionary Source="/Controls/SyncTabItem/SyncTabItem.xaml" />
                 <ResourceDictionary Source="/Controls/SyncTabControl/SyncTabControl.xaml" />

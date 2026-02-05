@@ -580,11 +580,11 @@
                 <TabControl SelectedIndex="{Binding SelectedTabIndex, Mode=OneWay}" Style="{StaticResource SyncTabControlStyle}">
 
                     <TabItem Style="{StaticResource SyncTabItemStyle}">
-                        <TextBlock Text="0" />
+                        <TextBlock Text="Sync" />
                     </TabItem>
 
                     <TabItem>
-                        <TextBlock Text="1" />
+                        <TextBlock Text="Mic" />
                     </TabItem>
 
                     <TabItem>
@@ -593,35 +593,36 @@
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-
-                            <ItemsControl
+                            <ListBox
+                                x:Name="ColorListBox"
                                 Grid.Row="0"
                                 d:ItemsSource="{d:SampleData ItemCount=5}"
+                                ItemContainerStyle="{StaticResource LightEffectColorsListBoxItemStyle}"
                                 ItemsSource="{Binding LightEffectColors}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel Orientation="Horizontal" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-
-                                <ItemsControl.ItemTemplate>
+                                <ListBox.Template>
+                                    <ControlTemplate TargetType="{x:Type ListBox}">
+                                        <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
+                                    </ControlTemplate>
+                                </ListBox.Template>
+                                <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <Border
                                             Width="32"
                                             Height="32"
                                             Margin="5"
-                                            Background="{Binding Color, Converter={StaticResource ColorToSolidColorBrushConverter}}"
+                                            Background="{Binding ., Converter={StaticResource ColorToSolidColorBrushConverter}}"
                                             BorderBrush="{DynamicResource ListViewItemBackgroundPointerOver}"
                                             BorderThickness="5"
-                                            CornerRadius="16">
-                                        </Border>
+                                            CornerRadius="16" />
                                     </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
 
-                            <Grid Grid.Row="1">
-                                <TextBox Text="" />
-                            </Grid>
+                            <TextBox
+                                x:Name="ColorTextBox"
+                                Grid.Row="1"
+                                Text="{Binding ElementName=ColorListBox, Path=SelectedItem, Mode=TwoWay}"
+                                TextChanged="ColorTextBox_TextChanged" />
                         </Grid>
                     </TabItem>
                 </TabControl>
