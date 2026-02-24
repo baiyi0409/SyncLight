@@ -8,5 +8,3 @@
 
 <img width="1280" height="800" alt="image" src="https://github.com/user-attachments/assets/2ec28cf9-3af9-449e-ba4c-19b9cb51fd25" />
 
-![Uploading image.png…]()
-
