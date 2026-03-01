@@ -100,6 +100,7 @@ namespace SyncLight
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<ISnackbarService, SyncSnackbarService>();
             services.AddSingleton<IContentDialogService, ContentDialogService>();
+            services.AddSingleton<ScreenEdgeColor>();
 
             //AdaLight
             services.AddSingleton<Adalight>(sp => 

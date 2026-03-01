@@ -478,7 +478,8 @@
                             Height="100"
                             Margin="10"
                             Background="{DynamicResource CardBackground}"
-                            CornerRadius="16" />
+                            CornerRadius="16">
+                        </Border>
                         <Border
                             Width="220"
                             Height="100"
@@ -495,12 +496,14 @@
                             Width="250"
                             Height="100"
                             Margin="10"
-                            Background="{DynamicResource CardBackground}" />
+                            Background="{DynamicResource CardBackground}"
+                            CornerRadius="16" />
                         <Border
                             Width="250"
                             Height="100"
                             Margin="10"
-                            Background="{DynamicResource CardBackground}" />
+                            Background="{DynamicResource CardBackground}"
+                            CornerRadius="16" />
                     </StackPanel>
                 </ScrollViewer>
             </Grid>

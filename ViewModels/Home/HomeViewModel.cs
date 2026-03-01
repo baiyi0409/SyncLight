@@ -7,8 +7,10 @@ using SyncLight.Models;
 using SyncLight.Views.Pages;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Media;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
+using static System.Windows.Forms.AxHost;
 
 namespace SyncLight.ViewModels.Home
 {
@@ -16,10 +18,14 @@ namespace SyncLight.ViewModels.Home
     {
         private readonly ISnackbarService _snackbarService;
         private readonly Adalight _adalight;
-        public HomeViewModel(ISnackbarService snackbarService,Adalight adalight)
+        private readonly ScreenEdgeColor _screenEdge;
+
+        public HomeViewModel(ISnackbarService snackbarService,Adalight adalight,ScreenEdgeColor screenEdge)
         {
             _snackbarService = snackbarService;
             _adalight = adalight;
+            _screenEdge = screenEdge;
+
             Dev_IsOpen = _adalight.Connected;
             Dev_Port = _adalight.Port;
             Dev_BaudRate = _adalight.Speed;
@@ -28,6 +34,8 @@ namespace SyncLight.ViewModels.Home
             InitLightEffects();
             InitLightEffectColors();
         }
+
+        private System.Threading.Timer _timer;
 
         #region 设备设置
 
@@ -183,11 +191,36 @@ namespace SyncLight.ViewModels.Home
             //需要分情况
             //四种情况 屏幕追光、麦克风、纯色、内置灯效
             LightEffect_BorderIsVisible = Visibility.Hidden;
+            if (_timer != null)
+            {
+                _timer.Change(Timeout.Infinite, Timeout.Infinite);
+
+                //释放资源
+                _timer.Dispose();
+                _timer = null;
+            }
+
             switch (item.Type) 
             {
+                case LightEffectsEnum.SyncMode:
+                    _timer = new System.Threading.Timer(async (state) =>
+                    {
+                        try
+                        {
+                            var colors = _screenEdge.GetScreenColor();
+                            await Task.Run(() => _adalight.UpdateColors(colors, update: true));
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"SyncMode Error: {ex.Message}");
+                        }
+                    }, null, 0, 5);  // 0ms 立即开始，5ms 间隔
+                    break;
+
                 case LightEffectsEnum.EmbeddedMode:
                     _adalight.GetEmbeddedMode(item.Id);
                     break;
+
                 case LightEffectsEnum.ColorMode:
                     LightEffect_BorderIsVisible = Visibility.Visible;
                     break;
